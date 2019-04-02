@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>Calendar</title>
+		<style>
+			* {
+				margin: 0px;
+				padding: 0px;
+			}
+			
+			.calendar {
+				width: 700px;
+				height: 420px;
+				margin: 100px auto;
+				font-family: "微软雅黑";
+			}
+			
+			.title {
+				width: 700px;
+				height: 210px;
+				background: #1abc9c;
+				position: relative;
+				text-align: center;
+			}
+			
+			.title #left {
+				width: 70px;
+				height: 210px;
+				color: #ffffff;
+				position: absolute;
+				text-decoration: none;
+				left: 0px;
+				margin-top: 0px;
+				text-align: center;
+				line-height: 210px;
+			}
+			
+			.title #right {
+				width: 70px;
+				height: 210px;
+				color: #ffffff;
+				position: absolute;
+				text-decoration: none;
+				right: 0px;
+				margin-top: 0px;
+				text-align: center;
+				line-height: 200px;
+			}
+			
+			.title #left:hover {
+				background-color: #FFA500;
+			}
+			
+			.title #right:hover {
+				background-color: #FFA500;
+			}
+			
+			.title #now {
+				position: absolute;
+				top: 50%;
+				margin-top: -20px;
+				margin-left: -40px;
+				color: #ffffff;
+			}
+			
+			.week {
+				width: 100px;
+				height: 30px;
+				background-color: #dddddd;
+				color: #888d91;
+				float: left;
+				text-align: center;
+				line-height: 30px;
+			}
+			
+			.day {
+				width: 100px;
+				height: 30px;
+				background-color: #eeeeee;
+				color: #8f8d99;
+				float: left;
+				text-align: center;
+				line-height: 30px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="calendar">
+			<!--显示日期部分-->
+			<div class="title">
+				<a id="left" href="#">
+					<</a>
+						<span id="now">November<br>2017</span>
+						<a id="right" href="#">></a>
+			</div>
+			<div>
+				<div class="week">Mo</div>
+				<div class="week">Tu</div>
+				<div class="week">We</div>
+				<div class="week">Th</div>
+				<div class="week">Fr</div>
+				<div class="week">Sa</div>
+				<div class="week">Su</div>
+			</div>
+			<div id="days">
+				<div class="day" id="day1"></div>
+				<div class="day" id="day2"></div>
+				<div class="day" id="day3"></div>
+				<div class="day" id="day4"></div>
+				<div class="day" id="day5"></div>
+				<div class="day" id="day6"></div>
+				<div class="day" id="day7"></div>
+
+				<div class="day" id="day8"></div>
+				<div class="day" id="day9"></div>
+				<div class="day" id="day10"></div>
+				<div class="day" id="day11"></div>
+				<div class="day" id="day12"></div>
+				<div class="day" id="day13"></div>
+				<div class="day" id="day14"></div>
+
+				<div class="day" id="day15"></div>
+				<div class="day" id="day16"></div>
+				<div class="day" id="day17"></div>
+				<div class="day" id="day18"></div>
+				<div class="day" id="day19"></div>
+				<div class="day" id="day20"></div>
+				<div class="day" id="day21"></div>
+
+				<div class="day" id="day22"></div>
+				<div class="day" id="day23"></div>
+				<div class="day" id="day24"></div>
+				<div class="day" id="day25"></div>
+				<div class="day" id="day26"></div>
+				<div class="day" id="day27"></div>
+				<div class="day" id="day28"></div>
+
+				<div class="day" id="day29"></div>
+				<div class="day" id="day30"></div>
+				<div class="day" id="day31"></div>
+				<div class="day" id="day32"></div>
+				<div class="day" id="day33"></div>
+				<div class="day" id="day34"></div>
+				<div class="day" id="day35"></div>
+
+				<div class="day" id="day36"></div>
+				<div class="day" id="day37"></div>
+				<div class="day" id="day38"></div>
+				<div class="day" id="day39"></div>
+				<div class="day" id="day40"></div>
+				<div class="day" id="day41"></div>
+				<div class="day" id="day42"></div>
+			</div>
+			<script type="text/javascript">
+				var now = document.getElementById('now');
+				var left = document.getElementById('left');
+				var right = document.getElementById('right');
+				var days = document.getElementById("days");
+
+				var monthLetter = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+				var nowDay = new Date();
+				var thisYear = nowDay.getFullYear(); //获取当前年份
+				var thisMonth = nowDay.getMonth() + 1; //获取当前月份
+				var today = nowDay.getDate(); //获取当前号数
+
+				var dayNum = today.toString(); //用于变更操作
+				var changeYear = thisYear;
+				var changeMonth = thisMonth;
+				var changeDay = dayNum;
+
+				function refresh() { //刷新页面
+					for(var i = 1; i <= 42; i++) {
+						var Rday = document.getElementById("day" + i);
+						Rday.innerHTML = " ";
+						Rday.style = "backgroud-color:#eeeeee";
+					}
+				}
+
+				function printDays(year, month) { //显示当前月的信息
+					refresh();
+					var nowMonthStartDay = new Date(year, month - 1, 1).getDay(); //当前月第一天是周几
+					if(nowMonthStartDay == 0) {
+						nowMonthStartDay = 7;
+					}
+					var numberOfDaysInMonth = new Date(year, month, 0).getDate(); //当前月有多少天
+					now.innerHTML = " ";
+					now.innerHTML = monthLetter[month - 1] + '</br>' + year; //改变title的内容
+					for(var i = 1, j = nowMonthStartDay; i <= numberOfDaysInMonth; i++, j++) { //判断变色的日期
+						var Day = document.getElementById("day" + j);
+						Day.innerHTML = "" + i;
+						if(year == thisYear && month == thisMonth && i.toString() == dayNum) { //当前日期一直是绿色
+							Day.style = "background-color:#1abc9c";
+						}
+						if(i.toString() == changeDay) { //选中的符合要求的日期显示绿色
+							Day.style = "background-color:#1abc9c";
+						}
+					}
+				}
+
+				printDays(thisYear, thisMonth);
+
+				left.onclick = function() {
+					if(changeMonth == 1) {
+						changeYear--;
+						changeMonth = 12;
+					} else {
+						changeMonth--;
+					}
+					changeDay = 0; //翻页的时候将选中的日期清空
+					printDays(changeYear, changeMonth); //打印下一个月的日期
+				}
+				right.onclick = function() {
+					if(changeMonth == 12) {
+						changeYear++;
+						changeMonth = 1;
+					} else {
+						changeMonth++;
+					}
+					changeDay = 0;
+					printDays(changeYear, changeMonth);
+				}
+				days.onmouseover = function(e) { //鼠标移上变橘黄色
+					if(e.target && e.target.nodeName == "DIV") {
+						e.target.style = "background-color:orange";
+					}
+				}
+				days.onmouseout = function(e) { //鼠标移走恢复原色
+					if(e.target && e.target.nodeName == "DIV") {
+						e.target.style = "background-color:#eeeeee";
+					}
+					printDays(changeYear, changeMonth); //确保点击的日期显示颜色
+				}
+
+				days.onclick = function(e) { //点击日期，判断选中的年，月，日是否大于当前日期
+					var clickDay = e.target.innerHTML;
+					if(changeYear > thisYear) {
+						changeDay = clickDay;
+					} else if(changeYear == thisYear && changeMonth > thisMonth) {
+						changeDay = clickDay;
+					} else if(changeYear == thisYear && changeMonth == thisMonth && clickDay >= today) {
+						changeDay = clickDay;
+					}
+					printDays(changeYear, changeMonth);
+				}
+			</script>
+	</body>
+
+</html>
